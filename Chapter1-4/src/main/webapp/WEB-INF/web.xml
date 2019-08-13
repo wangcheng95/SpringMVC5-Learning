@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+  <!--web.xml文件可以在Tomcat的conf文件下找到-->
+  <display-name>springMVC</display-name>
+  <!--配置解决URL请求参数中文乱码问题-->
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <!--配置Servlet的名字，默认会加载springmvc-servlet.xml的配置文件-->
+    <servlet-name>springmvc</servlet-name>
+    <servlet-class>
+      org.springframework.web.servlet.DispatcherServlet
+    </servlet-class>
+    <!--初始化时加载配置文件，可选配置-->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <!--指定前端控制器在类路径的目录位置-->
+      <param-value>classpath:springmvc.xml</param-value>
+    </init-param>
+    <!--若指定为 0 或者 正数，则在当前 web 应用被 Servlet 容器加载时创建 Servlet 实例，且数字越小，表明这个Servlet 越早被创建-->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>springmvc</servlet-name>
+    <!--表示这个Servlet将会拦截所有/的请求-->
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>
