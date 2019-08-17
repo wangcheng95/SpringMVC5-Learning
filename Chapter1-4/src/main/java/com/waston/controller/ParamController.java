@@ -7,28 +7,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
 
+/**
+ * SpringMVC参数绑定（简单类型、复杂类型和自定义类型转换器）
+ * 访问/param.jsp页面进行测试
+ */
 @Controller
-@RequestMapping("/param")
 public class ParamController {
 
     /**
      * 请求参数绑定入门
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/test1")
     public String testParam(){
-        System.out.println("执行了...");
-        return "param";
+        System.out.println("test1执行了...");
+        return "success";
     }
 
     /**
      * 传入普通变量
      * @return
      */
-    @RequestMapping("/test")
+    @RequestMapping("/test2")
     public String testParam2(String name, Integer id){
+        System.out.println("test2执行了...");
         System.out.println(name + "，你好，你的id为：" + id);
-        return "hello";
+        return "success";
     }
 
     /**
@@ -38,8 +42,8 @@ public class ParamController {
      * @return
      */
     @RequestMapping("/saveAccount")
-    public String testParam3(Account account){
-        if(account.getUsername() == null) return "domain";
+    public String saveAccount(Account account){
+        System.out.println("saveAccount执行了...");
         System.out.println(account.toString());
         return "success";
     }
@@ -49,7 +53,9 @@ public class ParamController {
      * @return
      */
     @RequestMapping("/date")
-    public void testParam4(Date date){
+    public String date(Date date){
+        System.out.println("date执行了...");
         System.out.println(date);
+        return "success";
     }
 }
