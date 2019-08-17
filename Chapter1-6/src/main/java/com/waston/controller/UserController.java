@@ -3,7 +3,9 @@ package com.waston.controller;
 import com.waston.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
@@ -89,5 +91,32 @@ public class UserController {
 //        return "forward:/WEB-INF/pages/forward.jsp";
         //重定向，底层会将项目名给加上
         return "redirect:/redirect.jsp";
+    }
+
+
+    //下面通过访问/json_response.jsp进行测试
+    /**
+     * 模拟异步请求响应，这样body就是json字符串
+     */
+    @RequestMapping("/testAjax1")
+    public void testAjax1(@RequestBody String body){
+        System.out.println("testAjax1执行中...");
+        System.out.println(body);
+    }
+
+    /**
+     * 模拟异步请求响应，如果需要对json进行处理，需要引入jackson的jar包。
+     * Spring MVC默认使用jackson进行json转换。
+     */
+    @RequestMapping("/testAjax2")
+    public @ResponseBody User testAjax2(@RequestBody User user){
+        System.out.println("testAjax2执行中...");
+        //客户端发送的ajax请求，传的是json字符串，后端把jason字符串疯撞倒user对象中
+        System.out.println(user);
+        //做响应，模拟查询数据库
+        user.setUsername("李四");
+        user.setPassword("******");
+        user.setAge(55);
+        return user;
     }
 }

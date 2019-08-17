@@ -21,4 +21,9 @@
         <property name="prefix" value="/WEB-INF/pages/" />
         <property name="suffix" value=".jsp" />
     </bean>
+
+    <!--前端控制器，哪些静态资源不拦截，/**表示/img/x/y这样的请求也不会被拦截-->
+    <mvc:resources location="/img/" mapping="/img/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
 </beans>
