@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--开启自动扫描的包的位置，@Component注解的类，并且将它们自动注册到容器中，同时也扫描@Controller，@Service，@Respository这三个注解，因为他们是继承自@Component。-->
+    <context:component-scan base-package="com.waston.controller" />
+
+    <!--开启SpringMVC框架注解的支持-->
+    <mvc:annotation-driven />
+
+    <!--配置视图解析器的解析规则-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!--前端控制器，哪些静态资源不拦截，/**表示/img/x/y这样的请求也不会被拦截-->
+    <mvc:resources location="/img/" mapping="/img/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--要拦截的具体方法-->
+            <mvc:mapping path="/user/**"/>
+            <!--不拦截的方法-->
+<!--            <mvc:exclude-mapping path=""/>-->
+            <!--配置拦截器对象-->
+            <bean class="com.waston.interceptor.MyInterceptor1" />
+        </mvc:interceptor>
+
+        <!--配置第二个拦截器-->
+        <mvc:interceptor>
+            <!--要拦截的具体方法-->
+            <mvc:mapping path="/**"/>
+            <!--不拦截的方法-->
+            <!--            <mvc:exclude-mapping path=""/>-->
+            <!--配置拦截器对象-->
+            <bean class="com.waston.interceptor.MyInterceptor2" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>
